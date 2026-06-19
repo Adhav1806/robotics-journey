@@ -15,3 +15,4 @@ Made a binary counter using a breadboard and 4 LEDs that count from 0 to 15 in b
 ### Project 4: LED Brightness Increment Device
 Made a LED brightness increment device. Increases the brightness of the LED every click of the switch. Uses a variable to store the state of the switch and stores it ever iteration of the loop. If the state of the swtich becomes 0, and the last iteration's state was 1 it increases the LED. It uses a previous state variable as to not increment upon just holding the button. It only increments upon clicking once. 
 Errors: Wired the LED and switch system together, which ended up not working. Took some help and realised that i have to separate both the systems and use code to unite them. Multple code errors aswell that got fixed with time.
+[View code](projects/day2-button-brightness/sketch.ino)
