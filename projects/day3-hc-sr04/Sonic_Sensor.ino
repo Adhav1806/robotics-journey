@@ -3,14 +3,14 @@ float dur;
 float dist;
 int echo = 8;
 void setup() {
-
+ 
 Serial.begin(9600);
 pinMode(trig, OUTPUT);
 pinMode(echo, INPUT);
 }
 
 void loop() {
-
+ 
 digitalWrite(trig, LOW);
 delayMicroseconds(2);
 digitalWrite(trig, HIGH);
