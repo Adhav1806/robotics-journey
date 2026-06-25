@@ -22,8 +22,6 @@ void setup() {
 void loop() {
   for (int theta = 0; theta <= 180; theta++) {
     myServo.write(theta);
-    Serial.print("Angle is ");
-    Serial.println(theta);
     digitalWrite(trig, LOW);
     delayMicroseconds(2);
     digitalWrite(trig, HIGH);
@@ -31,14 +29,13 @@ void loop() {
     digitalWrite(trig, LOW);
     dur = pulseIn(echo, HIGH, 38000);
     dist = dur / 58;
-    Serial.print("Distance is ");
+    if (dur > 0) {
     Serial.println(dist);
-    delay(15);
+    }
+    delay(100);
   }
   for (int theta = 180; theta >= 0; theta--) {
     myServo.write(theta);
-    Serial.print("Angle is ");
-    Serial.println(theta);
     digitalWrite(trig, LOW);
     delayMicroseconds(2);
     digitalWrite(trig, HIGH);
@@ -46,8 +43,9 @@ void loop() {
     digitalWrite(trig, LOW);
     dur = pulseIn(echo, HIGH, 38000);
     dist = dur / 58;
-    Serial.print("Distance is ");
+    if (dur > 0) {
     Serial.println(dist);
-    delay(15);
+    }
+    delay(100);
   }
 }
