@@ -33,3 +33,5 @@ pulseIn was blocking, it freezes the whole program until the echo returns.
 ### Next:
 Fix the serial port issue. Verify the serial monitor output. 
 [View Code](projects/day4-servo-radar/servo_radar.ino)
+
+[Demo Video](https://youtu.be/ClaX6ihR6sw)
