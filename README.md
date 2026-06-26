@@ -51,4 +51,4 @@ Used the rotary encoder to turn the servo. Every unit turn turns the servo by 5 
 - INPUT_PULLUP is important so that the value doenst hover between HIGH and LOW.
 - Learnt how to use the rotary encoder.
 
-[View Code](projects/day5-rotary-encoder-servo)
+[View Code](projects/day5-rotary-encoder-servo/rotary_encoder_servo.ino)
