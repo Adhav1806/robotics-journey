@@ -9,6 +9,7 @@ int thetapin = 9;
 int theta = 90;
 int lastclkstate;
 int swstate;
+int direction;
 void setup() {
 myServo.attach(thetapin);
 myServo.write(90);
@@ -18,29 +19,39 @@ pinMode(sw, INPUT_PULLUP);
 lastclkstate = digitalRead(clk);
 }
 
-void loop() {
-clkstate = digitalRead(clk);
-if (lastclkstate != clkstate){
+int ReadEncoder(){
+  clkstate = digitalRead(clk);
   dtstate = digitalRead(dt);
-  if (lastclkstate == dtstate){
-    theta -= 5;
-    if (theta > 180) theta = 180;
-    if (theta < 0) theta = 0;
-    myServo.write(theta);
-    
+  if (clkstate != lastclkstate){
+    if (dtstate != lastclkstate){
+      return 1;
+    } else {
+      return -1;
+    }
   } else {
-    theta += 5;
-    if (theta > 180) theta = 180;
-    if (theta < 0) theta = 0;
-    myServo.write(theta);
-    
+    return 0;
   }
-  lastclkstate = clkstate;
 }
-swstate = digitalRead(sw);
-if (swstate == 0) {
-  theta = 90;
-  myServo.write(90);
+
+int clampTheta(int theta){
+  if (theta > 180) return 180;
+  if (theta < 0 ) return 0;
+  return theta;
 }
+
+void updateServo(){
+  swstate = digitalRead(sw);
+  if (swstate == 0){
+    theta = 90;
+  }
+  myServo.write(theta);
+}
+
+void loop() {
+direction = ReadEncoder();
+theta += direction * 5;
+theta = clampTheta(theta);
+updateServo();
+lastclkstate = clkstate;
 
 }
