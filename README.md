@@ -32,6 +32,8 @@ Used the HC-SR04 sensor, arduino, and the IDE to measure distance using the sens
 pulseIn was blocking, it freezes the whole program until the echo returns. 
 ### Next:
 Fix the serial port issue. Verify the serial monitor output. 
+
+Serial port and Serial monitor output fixed.
 [View Code](projects/day4-servo-radar/servo_radar.ino)
 
 [Demo Video](https://youtu.be/ClaX6ihR6sw)
