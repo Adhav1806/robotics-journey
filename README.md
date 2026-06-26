@@ -52,3 +52,4 @@ Used the rotary encoder to turn the servo. Every unit turn turns the servo by 5 
 - Learnt how to use the rotary encoder.
 
 [View Code](projects/day5-rotary-encoder-servo/rotary_encoder_servo.ino)
+[Demo Video](https://youtu.be/sYo4ep5gtlI)
