@@ -53,3 +53,110 @@ Used the rotary encoder to turn the servo. Every unit turn turns the servo by 5 
 
 [View Code](projects/day5-rotary-encoder-servo/rotary_encoder_servo.ino)
 [Demo Video](https://youtu.be/sYo4ep5gtlI)
+
+## Day 27: Refactoring Code For Two Projects:
+### Project 6 Refactor:
+### What it does:
+- Same as previous. A servo spins with a HR-SR04 mounted on it (unmounted currently). The sensor then prints the distance readings, also easily visualised through the serial plotter.
+## Refactor: Before and After
+
+**Before — all logic in `loop()`:**
+```cpp
+void loop() {
+  for (int theta = 0; theta <= 180; theta++) {
+    myServo.write(theta);
+    digitalWrite(trig, LOW);
+    delayMicroseconds(2);
+    digitalWrite(trig, HIGH);
+    delayMicroseconds(10);
+    digitalWrite(trig, LOW);
+    dur = pulseIn(echo, HIGH, 38000);
+    dist = dur / 58;
+    if (dur > 0) {
+    Serial.println(dist);
+    }
+    delay(100);
+  }
+  for (int theta = 180; theta >= 0; theta--) {
+    myServo.write(theta);
+    digitalWrite(trig, LOW);
+    delayMicroseconds(2);
+    digitalWrite(trig, HIGH);
+    delayMicroseconds(10);
+    digitalWrite(trig, LOW);
+    dur = pulseIn(echo, HIGH, 38000);
+    dist = dur / 58;
+    if (dur > 0) {
+    Serial.println(dist);
+    }
+    delay(100);
+  }
+}
+```
+
+**After — functions only:**
+```cpp
+void loop() {
+  dist= sensorScan();
+  theta += sweepdir;
+  sweepdir = updateDirection(sweepdir, theta);
+  servoMove(theta);
+  Serial.println(dist);
+  delay(60);
+}
+```
+### Reasons for Refactoring:
+-Previously, all logic sat inside loop(), making it inconvenient and difficult to isolate which part of the code controlled what. Refactoring using functions means each responsibility has a name. Debugging is much simpler and is targetted.
+
+### Project 7 Refactor;
+### What it Does:
+- Same as before. Turning the knob of the rotary encoder turned the servo by 5 degrees every unit turn. Pressing down on the rotary encoder reset the servo
+position back to 90 degrees.
+
+### Refactor: Before and After
+
+**Before — all logic in `loop()`:**
+```cpp
+void loop() {
+clkstate = digitalRead(clk);
+if (lastclkstate != clkstate){
+  dtstate = digitalRead(dt);
+  if (lastclkstate == dtstate){
+    theta -= 5;
+    if (theta > 180) theta = 180;
+    if (theta < 0) theta = 0;
+    myServo.write(theta);
+    
+  } else {
+    theta += 5;
+    if (theta > 180) theta = 180;
+    if (theta < 0) theta = 0;
+    myServo.write(theta);
+    
+  }
+  lastclkstate = clkstate;
+}
+swstate = digitalRead(sw);
+if (swstate == 0) {
+  theta = 90;
+  myServo.write(90);
+}
+
+}
+```
+
+**After — functions only:**
+```cpp
+void loop() {
+direction = ReadEncoder();
+theta += direction * 5;
+theta = clampTheta(theta);
+updateServo();
+lastclkstate = clkstate;
+
+}
+```
+### Reasons for Refactor:
+- Previous loop() was messy and unordered. New code has named functions which make it easy for debugging.
+- Understood Scope and State Sequencing. In my current code there are two kinds of scope. Global and Local Scope. Global is declared outside the functions. Every function can see them and modify them freely. Local scope only exists within the function and only exists then the function runs. In clampTheta, the parameter 'theta' is a local copy. Changing it inside the function doesnt affect the Global theta unless we assign the return value back. State sequencing is when certain variables exist to remember what previously happened. Usually to compare it with the current state. This is useful in the LED dimming project aswell as the rotary encoder project. One good example within the rotary encoder project is when we use lastclkstate that exists to compare it with clkstate. If they are not equal, then it has turned. 
+
