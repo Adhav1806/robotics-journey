@@ -54,7 +54,7 @@ Used the rotary encoder to turn the servo. Every unit turn turns the servo by 5 
 [View Code](projects/day5-rotary-encoder-servo/rotary_encoder_servo.ino)
 [Demo Video](https://youtu.be/sYo4ep5gtlI)
 
-## Day 27: Refactoring Code For Two Projects:
+## Day 26: Refactoring Code For Two Projects:
 ### Project 6 Refactor:
 ### What it does:
 - Same as previous. A servo spins with a HR-SR04 mounted on it (unmounted currently). The sensor then prints the distance readings, also easily visualised through the serial plotter.
@@ -160,3 +160,13 @@ lastclkstate = clkstate;
 - Previous loop() was messy and unordered. New code has named functions which make it easy for debugging.
 - Understood Scope and State Sequencing. In my current code there are two kinds of scope. Global and Local Scope. Global is declared outside the functions. Every function can see them and modify them freely. Local scope only exists within the function and only exists then the function runs. In clampTheta, the parameter 'theta' is a local copy. Changing it inside the function doesnt affect the Global theta unless we assign the return value back. State sequencing is when certain variables exist to remember what previously happened. Usually to compare it with the current state. This is useful in the LED dimming project aswell as the rotary encoder project. One good example within the rotary encoder project is when we use lastclkstate that exists to compare it with clkstate. If they are not equal, then it has turned. 
 
+## Day 27 June 2026
+### Project 8: Servo and photoresistor mechanism;
+- Two photoresistors are connected a certain distance apart from each other in a voltage divider. The analog readings output values from 0-1023, based on amount of voltage. The photoresistor changes resistancce based on amount of light hitting it.The servo stays in a neutral position of 90 degrees pointing at nothing until there is a difference in light hitting the photoresistors. More light, less resistance and vice versa. A servo is then connected to this mechanism and through code, the servo points the photoresistor that is receiving more light.
+- Learnt the map() function today. It rescales a value from one range to another. In this project, the map function rescaled the analog readings of the photoresistor to angles for the servo motor. 
+### Bugs and Issues:
+- Tried powering the servo through pin 13. The GPIO pins dont supply enough current for a servo. This could have caused a brown-out or damaged the servo.
+- Header pin broke and got stuck inside the servo pin slot. Removed it using a needle.
+- Confused myServo.write() with myServo.attach().
+
+[View Code]()
