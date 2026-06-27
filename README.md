@@ -169,4 +169,4 @@ lastclkstate = clkstate;
 - Header pin broke and got stuck inside the servo pin slot. Removed it using a needle.
 - Confused myServo.write() with myServo.attach().
 
-[View Code](project-08-servo-light-tracker/light_tracker.ino)
+[View Code](projects/project-08-servo-light-tracker/light_tracker.ino)
