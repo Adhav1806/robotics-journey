@@ -168,5 +168,6 @@ lastclkstate = clkstate;
 - Tried powering the servo through pin 13. The GPIO pins dont supply enough current for a servo. This could have caused a brown-out or damaged the servo.
 - Header pin broke and got stuck inside the servo pin slot. Removed it using a needle.
 - Confused myServo.write() with myServo.attach().
+- Wiring was messy due to power distribution across multiple components. Future builds will use color coding and shortest-path routing from the start
 
 [View Code](projects/project-08-servo-light-tracker/light_tracker.ino)
