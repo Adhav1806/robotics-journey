@@ -171,3 +171,6 @@ lastclkstate = clkstate;
 - Wiring was messy due to power distribution across multiple components. Future builds will use color coding and shortest-path routing from the start
 
 [View Code](projects/project-08-servo-light-tracker/light_tracker.ino)
+
+## Day 28th June 2026:
+- Fried the 7-segment display by connecting segment pins directly to GND without current limiting resistors. Some of the segments dont work now, and a burning smell came from the display.
