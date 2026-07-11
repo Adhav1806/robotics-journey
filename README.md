@@ -174,3 +174,19 @@ lastclkstate = clkstate;
 
 ## Day 28th June 2026:
 - Fried the 7-segment display by connecting segment pins directly to GND without current limiting resistors. Some of the segments dont work now, and a burning smell came from the display.
+
+## Day 11th July 2026:
+### Project 9: Intruder Alarm Using Active Buzzer and HC-SR04:
+- School Exams got over 3 days ago, have time for projects again.
+### The 4 States of the Alarm:
+State 1 - IDLE: - The HC-SR04 isnt active and doesnt take any readings until triggered by a button press. 
+                - This transitions the state from IDLE to ARMING. 
+State 2 - ARMING: - This state is a grace period for the user to leave the place before finally arming the mechanism. At the very end of the grace period the HC-SR04 sensor takes captures a baseline reading.
+                  - The baseline is captured at the end since if it were to be captured in between the grace period or at the beginning, the mechanism wouldnt have the appropriate baseline. The sensor reads it as, "Room with human in it". Upon leaving the room or house, it would compare it to the                         users presence to the users absence and send a false alarm.
+                  - Upon capturing the baseline reading it transitions to the next state.
+State 3 - ARMED: - In this state, the sensor is active and is constantly taking readings. 
+                 - It doesnt trigger the alarm until there are 7-8 readings that vary from the baseline reading by 10 cm, since the sensor gives error readings sometimes due to noise, wrong angle deflections, etc., therefore, only after 7-8 readings(approximately 200-300 ms) the mechanism triggers the alarm.
+State 4 - TRIGGERED: - The active buzzer beeps, signalling an intruder. 
+                    - The mechanism is then turned off upon a button press that resets it to IDLE. 
+                    - The reset button is interrupt-driven (attachInterrupt), since it must fire instantly regardless of what the buzzers pulse logic is doing at that moment. 
+                    - The buzzer used is an active buzzer, therefore it has only one pitch.
